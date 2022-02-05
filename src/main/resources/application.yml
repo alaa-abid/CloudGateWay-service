@@ -1,0 +1,45 @@
+server:
+  port: 9191
+
+
+
+spring:
+  application:
+    name: API-GATEWAY
+  cloud:
+    gateway:
+      routes:
+        - id: CLIENT-SERVICE
+          uri: lb://CLIENT-SERVICE
+          predicates:
+            - Path=/api_client/**
+
+        - id: AGENT-SERVICE
+          uri: lb://AGENT-SERVICE
+          predicates:
+              - Path=/api_agent/**
+
+        - id: TRANSFER-SERVICE
+          uri: lb://TRANSFER-SERVICE
+          predicates:
+              - Path=/api_transfer/**
+
+        - id: BACKOFFICE-SERVICE
+          uri: lb://BACKOFFICE-SERVICE
+          predicates:
+              - Path=/api/backoffice/**
+
+
+
+
+
+
+eureka:
+  client:
+    register-zith-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+  instance:
+    hostname: localhost
+
